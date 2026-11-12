@@ -12,9 +12,11 @@ const NavBar: React.FC = () => {
   const currentUser = session?.user?.email;
   const role = session?.user?.role;
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar variant="dark" expand="lg" style={{ backgroundColor: '#01723E' }}>
       <Container>
-        <Navbar.Brand href="/">Next.js Application Template</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img src="/forumsLogo.png" alt="Manoa Forums" height="40" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
@@ -47,16 +49,37 @@ const NavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <NavDropdown id="login-dropdown" title="Login">
-                <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
-                  <PersonFill />
-                  Sign in
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
-                  <PersonPlusFill />
-                  Sign up
-                </NavDropdown.Item>
-              </NavDropdown>
+              <div
+                style={{
+                  backgroundColor: '#01723E',
+                  borderRadius: '9999px',
+                  padding: '0.35rem 0.5rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Nav.Link
+                  href="/auth/signin"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    color: '#01723E',
+                    borderRadius: '9999px',
+                    fontWeight: 800,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    padding: '0.7rem 2.5rem',
+                    lineHeight: 1,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: '180px',
+                    boxShadow: 'none',
+                  }}
+                >
+                  Sign In
+                </Nav.Link>
+              </div>
             )}
           </Nav>
         </Navbar.Collapse>

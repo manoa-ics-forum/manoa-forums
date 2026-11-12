@@ -5,9 +5,8 @@ import { useSession } from 'next-auth/react'; // v5 compatible
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, Spinner } from 'react-bootstrap';
 import { changePassword } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 type ChangePasswordForm = {
   oldpassword: string;
@@ -48,7 +47,14 @@ const ChangePassword = () => {
   };
 
   if (status === 'loading') {
-    return <LoadingSpinner />;
+    return (
+      <Container>
+        <Row className="justify-content-md-center">
+          <Spinner animation="border" />
+          Getting data
+        </Row>
+      </Container>
+    );
   }
 
   return (

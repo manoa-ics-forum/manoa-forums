@@ -1,5 +1,4 @@
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import AddStuffForm from '@/components/AddStuffForm';
 import { auth } from '@/lib/auth';
 
 const AddStuff = async () => {
@@ -12,7 +11,8 @@ const AddStuff = async () => {
   );
   return (
     <main>
-      <AddStuffForm />
+      <h1>Add Stuff</h1>
+      <p>This feature is not part of the landing-page build.</p>
     </main>
   );
 };
