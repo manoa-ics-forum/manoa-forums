@@ -1,8 +1,20 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
-import StuffItemAdmin from '@/components/StuffItemAdmin';
+import { Stuff } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import { auth } from '@/lib/auth';
+
+const StuffItemAdmin = ({ name, quantity, condition, owner, id }: Stuff) => (
+  <tr>
+    <td>{name}</td>
+    <td>{quantity}</td>
+    <td>{condition}</td>
+    <td>{owner}</td>
+    <td>
+      <a href={`/edit/${id}`}>Edit</a>
+    </td>
+  </tr>
+);
 
 const AdminPage = async () => {
   const session = await auth();
