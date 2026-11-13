@@ -1,57 +1,56 @@
-'use client';
+import Link from 'next/link';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
-import { signIn } from 'next-auth/react'; // v5 compatible
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+/** Manoa Forums sign-in page. */
+const SignIn = () => (
+  <main className="py-5">
+    <Container>
+      <Row className="justify-content-center">
+        <Col xs={12} md={8} lg={5}>
+          <Card className="shadow-sm border-0">
+            <Card.Header
+              className="text-white text-center py-4"
+              style={{ backgroundColor: '#075338' }}
+            >
+              <h1 className="h2 mb-2">Manoa Forums</h1>
+              <p className="mb-0">
+                Connect with the UH Mānoa community
+              </p>
+            </Card.Header>
 
-/** The sign in page. */
-const SignIn = () => {
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      email: { value: string };
-      password: { value: string };
-    };
-    const email = target.email.value;
-    const password = target.password.value;
-    await signIn('credentials', {
-      callbackUrl: '/list',
-      email,
-      password,
-    });
-  };
+            <Card.Body className="p-4 text-center">
+              <h2 className="h4 mb-3">Welcome Back!</h2>
 
-  return (
-    <main>
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <h1 className="text-center">Sign In</h1>
-            <Card>
-              <Card.Body>
-                <Form method="post" onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <input name="email" type="text" className="form-control" />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <input name="password" type="password" className="form-control" />
-                  </Form.Group>
-                  <Button type="submit" className="mt-3">
-                    Signin
-                  </Button>
-                </Form>
-              </Card.Body>
-              <Card.Footer>
-                Don&apos;t have an account?
-                <a href="/auth/signup">Sign up</a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </main>
-  );
-};
+              <p className="text-muted mb-4">
+                Sign in to participate in discussions,
+                share ideas, and connect with the
+                campus community.
+              </p>
+
+              <Button
+                variant="success"
+                className="w-100 py-2"
+                disabled
+              >
+                Sign In with UH Account
+              </Button>
+
+              <p className="text-muted small mt-3">
+                UH authentication integration coming soon.
+              </p>
+            </Card.Body>
+
+            <Card.Footer className="text-center py-3">
+              <span>Want to explore first? </span>
+              <Link href="/">
+                Browse Forums
+              </Link>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  </main>
+);
 
 export default SignIn;
