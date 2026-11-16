@@ -57,8 +57,30 @@ const NavBar: React.FC = () => {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  gap: '0.5rem',
                 }}
               >
+                <Nav.Link
+                  as="button"
+                  type="button"
+                  style={{
+                    backgroundColor: '#FFFFFF',
+                    color: '#01723E',
+                    borderRadius: '9999px',
+                    fontWeight: 800,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    padding: '0.7rem 2rem',
+                    lineHeight: 1,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: '180px',
+                    boxShadow: 'none',
+                  }}
+                >
+                  View Forums
+                </Nav.Link>
                 <Nav.Link
                   href="/auth/signin"
                   style={{
