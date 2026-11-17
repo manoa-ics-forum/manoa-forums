@@ -20,14 +20,16 @@ const SignIn = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     setError('');
     setLoading(true);
 
     try {
       const result = await signIn('credentials', {
-        email,
+        email: email.trim().toLowerCase(),
         password,
         redirect: false,
       });
@@ -35,7 +37,7 @@ const SignIn = () => {
       if (result?.error) {
         setError('Invalid email or password.');
       } else if (result?.ok) {
-        window.location.assign('/list');
+        window.location.assign('/');
       } else {
         setError('Unable to sign in. Please try again.');
       }
@@ -56,7 +58,9 @@ const SignIn = () => {
                 className="text-white text-center py-4"
                 style={{ backgroundColor: '#075338' }}
               >
-                <h1 className="h2 mb-2">Manoa Forums</h1>
+                <h1 className="h2 mb-2">
+                  Manoa Forums
+                </h1>
                 <p className="mb-0">
                   Connect with the UH Mānoa community
                 </p>
@@ -74,32 +78,44 @@ const SignIn = () => {
                 </p>
 
                 {error && (
-                  <Alert variant="danger">
+                  <Alert variant="danger" role="alert">
                     {error}
                   </Alert>
                 )}
 
                 <Form onSubmit={handleSignIn}>
-                  <Form.Group className="mb-3" controlId="email">
+                  <Form.Group
+                    className="mb-3"
+                    controlId="signin-email"
+                  >
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                       type="email"
                       name="email"
                       placeholder="Enter your email"
+                      autoComplete="email"
                       value={email}
-                      onChange={(event) => setEmail(event.target.value)}
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                      }}
                       required
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="password">
+                  <Form.Group
+                    className="mb-3"
+                    controlId="signin-password"
+                  >
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                       type="password"
                       name="password"
                       placeholder="Enter your password"
+                      autoComplete="current-password"
                       value={password}
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                      }}
                       required
                     />
                   </Form.Group>
@@ -117,6 +133,7 @@ const SignIn = () => {
                 <hr className="my-4" />
 
                 <Button
+                  type="button"
                   variant="outline-success"
                   className="w-100 py-2"
                   disabled
@@ -130,6 +147,13 @@ const SignIn = () => {
               </Card.Body>
 
               <Card.Footer className="text-center py-3">
+                <p className="mb-2">
+                  Don&apos;t have an account?{' '}
+                  <Link href="/auth/signup">
+                    Create an Account
+                  </Link>
+                </p>
+
                 <span>Want to explore first? </span>
                 <Link href="/">
                   Browse Forums
