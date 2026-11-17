@@ -9,9 +9,9 @@ const Home = () => (
         A place to connect and discuss academics, campus life, and experiences in Hawaii
       </h1>
       <div className={styles.actions}>
-        <button className={styles.button} type="button">
+        <Link className={styles.button} href="/forums">
           View Forums
-        </button>
+        </Link>
         <Link className={styles.button} href="/auth/signin">
           Sign In
         </Link>

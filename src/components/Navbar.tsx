@@ -2,8 +2,9 @@
 
 import { useSession } from 'next-auth/react'; // v5 compatible
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight, Lock } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
   const { data: session, status } = useSession();
@@ -12,10 +13,20 @@ const NavBar: React.FC = () => {
   const currentUser = session?.user?.email;
   const role = session?.user?.role;
   return (
-    <Navbar variant="dark" expand="lg" style={{ backgroundColor: '#01723E' }}>
-      <Container>
+    <Navbar
+      variant="dark"
+      expand="lg"
+      style={{ backgroundColor: '#01723E', minHeight: '78px', padding: '0.5rem 0' }}
+    >
+      <Container fluid style={{ padding: '0 8%' }}>
         <Navbar.Brand href="/">
-          <img src="/forumsLogo.png" alt="Manoa Forums" height="40" />
+          <Image
+            src="/forumsLogo.png"
+            alt="University of Hawaii at Manoa Forums"
+            width={140}
+            height={50}
+            unoptimized
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -61,8 +72,7 @@ const NavBar: React.FC = () => {
                 }}
               >
                 <Nav.Link
-                  as="button"
-                  type="button"
+                  href="/forums"
                   style={{
                     backgroundColor: '#FFFFFF',
                     color: '#01723E',
