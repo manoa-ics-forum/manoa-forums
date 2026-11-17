@@ -1,4 +1,5 @@
 import styles from './page.module.css';
+import Link from 'next/link';
 
 /** The Home page. */
 const Home = () => (
@@ -11,9 +12,9 @@ const Home = () => (
         <button className={styles.button} type="button">
           View Forums
         </button>
-        <button className={styles.button} type="button">
+        <Link className={styles.button} href="/auth/signin">
           Sign In
-        </button>
+        </Link>
       </div>
     </section>
   </main>

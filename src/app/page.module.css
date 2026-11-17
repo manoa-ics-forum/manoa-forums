@@ -40,6 +40,9 @@
 }
 
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 20rem;
   padding: 0.35rem 2.5rem;
   border: 0;
@@ -51,6 +54,7 @@
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 850;
   line-height: 1.15;
+  text-decoration: none;
   text-transform: uppercase;
 }
 
