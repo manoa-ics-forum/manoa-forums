@@ -26,7 +26,7 @@ const posts = [
     image: '/otherTag.png',
   },
   {
-    author: 'RAFFY RIVERS',
+    author: 'RAFFYRIVERS',
     time: '19 MINUTES AGO',
     category: 'CLASSES',
     title: 'ANY GOOD RESOURCES FOR MATH?',
