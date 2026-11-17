@@ -61,8 +61,7 @@ const NavBar: React.FC = () => {
                 }}
               >
                 <Nav.Link
-                  as="button"
-                  type="button"
+                  href="/forums"
                   style={{
                     backgroundColor: '#FFFFFF',
                     color: '#01723E',
