@@ -7,6 +7,10 @@
   padding: clamp(2.5rem, 8vh, 6rem) clamp(1.25rem, 4vw, 4rem);
   color: #fff;
   background-color: #006b3c;
+  background-image: url('/landingPageBG.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .hero {
