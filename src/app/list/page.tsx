@@ -1,8 +1,19 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Stuff } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import StuffItem from '@/components/StuffItem';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import { auth } from '@/lib/auth';
+
+const StuffItem = ({ name, quantity, condition, id }: Stuff) => (
+  <tr>
+    <td>{name}</td>
+    <td>{quantity}</td>
+    <td>{condition}</td>
+    <td>
+      <a href={`/edit/${id}`}>Edit</a>
+    </td>
+  </tr>
+);
 
 /** Render a list of stuff for the logged in user. */
 const ListPage = async () => {
