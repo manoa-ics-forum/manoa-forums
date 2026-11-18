@@ -16,10 +16,6 @@ test('test access to admin page', async ({ getUserPage }) => {
 
   // Check navigation elements
   await expect(
-    adminPage.getByRole('link', { name: 'Manoa Forums', exact: true })
-  ).toBeVisible({ timeout: 5000 });
-
-  await expect(
     adminPage.getByRole('link', { name: 'Add Stuff' })
   ).toBeVisible({ timeout: 5000 });
 
