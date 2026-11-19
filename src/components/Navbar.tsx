@@ -19,7 +19,7 @@ const NavBar: React.FC = () => {
       style={{ backgroundColor: '#01723E', minHeight: '78px', padding: '0.5rem 0' }}
     >
       <Container fluid style={{ padding: '0 8%' }}>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/forums">
           <Image
             src="/forumsLogo.png"
             alt="University of Hawaii at Manoa Forums"

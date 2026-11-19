@@ -37,7 +37,7 @@ const SignIn = () => {
       if (result?.error) {
         setError('Invalid email or password.');
       } else if (result?.ok) {
-        window.location.assign('/');
+        window.location.assign('/forums');
       } else {
         setError('Unable to sign in. Please try again.');
       }
@@ -155,7 +155,7 @@ const SignIn = () => {
                 </p>
 
                 <span>Want to explore first? </span>
-                <Link href="/">
+                <Link href="/forums">
                   Browse Forums
                 </Link>
               </Card.Footer>

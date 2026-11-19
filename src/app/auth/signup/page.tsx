@@ -83,7 +83,7 @@ const SignUp = () => {
       });
 
       if (signInResult?.ok && !signInResult.error) {
-        window.location.assign('/');
+        window.location.assign('/forums');
       } else {
         setError(
           'Your account was created, but automatic sign-in failed. Please sign in manually.',
@@ -209,7 +209,7 @@ const SignUp = () => {
                 </p>
 
                 <span>Want to explore first? </span>
-                <Link href="/">
+                <Link href="/forums">
                   Browse Forums
                 </Link>
               </Card.Footer>
