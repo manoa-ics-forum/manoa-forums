@@ -20,6 +20,7 @@ if (!fs.existsSync(SESSION_STORAGE_PATH)) {
 interface AuthFixtures {
   getUserPage: (email: string, password: string) => Promise<Page>;
 }
+
 /**
  * Authenticate using the UI with robust waiting and error handling
  */
@@ -75,22 +76,26 @@ async function authenticateWithUI(
       { selector: 'input[name="password"]', value: password },
     ]);
 
-    // Click submit button and wait for navigation
-    const submitButton = page.getByRole('button', { name: /sign[ -]?in/i });
-    if (!await submitButton.isVisible({ timeout: 1000 })) {
+    // Click the regular Sign In button
+    const submitButton = page.getByRole('button', {
+      name: 'Sign In',
+      exact: true,
+    });
+
+    if (!await submitButton.isVisible()) {
       // Try alternative selector if the first one doesn't work
       await page.getByRole('button', { name: /log[ -]?in/i }).click();
     } else {
       await submitButton.click();
     }
 
-
     // Wait for a clear post-login indicator (user button or sign out button)
     const userButton = page.getByRole('button', { name: email });
     const signOutButton = page.getByRole('button', { name: /sign out/i });
+
     await Promise.any([
       expect(userButton).toBeVisible({ timeout: 10000 }),
-      expect(signOutButton).toBeVisible({ timeout: 10000 })
+      expect(signOutButton).toBeVisible({ timeout: 10000 }),
     ]);
 
     // Save session for future tests
@@ -99,7 +104,6 @@ async function authenticateWithUI(
     console.log(`✓ Successfully authenticated ${email} and saved session`);
   } catch (error) {
     console.error(`× Authentication failed for ${email}:`, error);
-
     throw new Error(`Authentication failed: ${error}`);
   }
 }
