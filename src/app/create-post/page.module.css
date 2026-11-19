@@ -1,0 +1,199 @@
+.page {
+  width: 100%;
+  flex: 1;
+  background: #fff;
+}
+
+.editor {
+  display: flex;
+  width: min(100% - 2rem, 1400px);
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+
+.titleRow {
+  display: flex;
+  min-height: 84px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 5.5%;
+  background: #e6efeb;
+}
+
+.titleField {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.titleField input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: #000;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.titleField input::placeholder {
+  color: #000;
+  opacity: 1;
+}
+
+.titleField:focus-within {
+  outline: 3px solid #ffb81c;
+  outline-offset: 5px;
+}
+
+.required {
+  color: #00733f;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.tagPicker {
+  position: relative;
+  display: inline-flex;
+  width: min(32%, 320px);
+  min-width: 150px;
+  height: 56px;
+  align-items: center;
+}
+
+.tagPicker::after {
+  position: absolute;
+  right: 1.25rem;
+  color: #fff;
+  content: '▾';
+  pointer-events: none;
+}
+
+.tagPicker select {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  appearance: none;
+  border: 0;
+  border-radius: 9999px;
+  color: #fff;
+  background: #007b45;
+  cursor: pointer;
+  font: inherit;
+  font-size: clamp(1rem, 2.8vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.tagPicker select:focus-visible,
+.postButton:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 4px;
+}
+
+.bodyField {
+  width: 100%;
+  min-height: clamp(260px, 42vh, 480px);
+  padding: 1.5rem;
+  resize: vertical;
+  border: 0;
+  border-radius: 10px;
+  outline: 0;
+  color: #000;
+  background: #e6efeb;
+  font: inherit;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.bodyField:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 3px;
+}
+
+.bodyField::placeholder {
+  color: #000;
+  opacity: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.postButton {
+  width: min(320px, 100%);
+  min-height: 58px;
+  padding: 0.5rem 2rem;
+  border: 0;
+  border-radius: 9999px;
+  color: #fff;
+  background: #007b45;
+  cursor: pointer;
+  font: inherit;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 600px) {
+  .editor {
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+  }
+
+  .titleRow {
+    min-height: 68px;
+    gap: 0.6rem;
+    padding: 0.6rem;
+  }
+
+  .tagPicker {
+    width: 38%;
+    min-width: 120px;
+    height: 46px;
+  }
+
+  .tagPicker::after {
+    right: 0.7rem;
+  }
+
+  .tagPicker select {
+    padding-right: 1.8rem;
+    padding-left: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .bodyField {
+    min-height: 300px;
+    padding: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .postButton {
+    width: 50%;
+  }
+}

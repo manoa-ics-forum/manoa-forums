@@ -12,6 +12,21 @@ const NavBar: React.FC = () => {
   if (status === 'loading') return null;
   const currentUser = session?.user?.email;
   const role = session?.user?.role;
+  const navButtonStyle: React.CSSProperties = {
+    backgroundColor: '#FFFFFF',
+    color: '#01723E',
+    borderRadius: '9999px',
+    fontWeight: 800,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    padding: '0.7rem 2rem',
+    lineHeight: 1,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: '180px',
+    boxShadow: 'none',
+  };
   return (
     <Navbar
       variant="dark"
@@ -49,16 +64,26 @@ const NavBar: React.FC = () => {
           </Nav>
           <Nav>
             {session ? (
-              <NavDropdown id="login-dropdown" title={currentUser}>
-                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight />
-                  Sign Out
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
-                  <Lock />
-                  Change Password
-                </NavDropdown.Item>
-              </NavDropdown>
+              <>
+                <Nav.Link
+                  id="create-post-nav"
+                  href="/create-post"
+                  active={pathName === '/create-post'}
+                  style={navButtonStyle}
+                >
+                  Create Post
+                </Nav.Link>
+                <NavDropdown id="login-dropdown" title={currentUser}>
+                  <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
+                    <BoxArrowRight />
+                    Sign Out
+                  </NavDropdown.Item>
+                  <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
+                    <Lock />
+                    Change Password
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
             ) : (
               <div
                 style={{
@@ -72,41 +97,24 @@ const NavBar: React.FC = () => {
                 }}
               >
                 <Nav.Link
+                  id="create-post-nav"
+                  href="/create-post"
+                  active={pathName === '/create-post'}
+                  style={navButtonStyle}
+                >
+                  Create Post
+                </Nav.Link>
+                <Nav.Link
                   href="/forums"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#01723E',
-                    borderRadius: '9999px',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    padding: '0.7rem 2rem',
-                    lineHeight: 1,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minWidth: '180px',
-                    boxShadow: 'none',
-                  }}
+                  style={navButtonStyle}
                 >
                   View Forums
                 </Nav.Link>
                 <Nav.Link
                   href="/auth/signin"
                   style={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#01723E',
-                    borderRadius: '9999px',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
+                    ...navButtonStyle,
                     padding: '0.7rem 2.5rem',
-                    lineHeight: 1,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minWidth: '180px',
-                    boxShadow: 'none',
                   }}
                 >
                   Sign In
