@@ -14,24 +14,26 @@ async function main() {
       update: {},
       create: {
         email: account.email,
+        username: account.username,
         password,
         role,
       },
     });
     // console.log(`  Created user: ${user.email} with role: ${user.role}`);
   });
-  for (const data of config.defaultData) {
-    const condition = data.condition as Condition || Condition.good;
+  for (const data of config.defaultPosts) {
     console.log(`  Adding stuff: ${JSON.stringify(data)}`);
      
     await prisma.stuff.upsert({
-      where: { id: config.defaultData.indexOf(data) + 1 },
+      where: { id: config.defaultPosts.indexOf(data) + 1 },
       update: {},
       create: {
-        name: data.name,
-        quantity: data.quantity,
-        owner: data.owner,
-        condition,
+        title: data.title,
+        content: data.content,
+        category: data.category,
+        author: {
+          connect: { email: data.author },
+        }
       },
     });
   }
