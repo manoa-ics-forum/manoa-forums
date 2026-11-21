@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "vercel-build" : "prisma generate && prisma migrate deploy && prisma db seed",
+    "vercel-build" : "prisma generate && prisma migrate dev && prisma db seed",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
