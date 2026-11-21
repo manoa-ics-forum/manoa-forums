@@ -10,7 +10,7 @@ import { votePost, removeVote } from '@/lib/dbActions';
 // TODO: Instead of double clicking their vote, users should simply click their vote and it will remove the vote.
 // TODO: give immediate feedback when user votes (Users should not have to reload to view the votes after voting on a post)
 
-const PostComponent = ({post, user, voteTotal}: {post: Post, user: User, voteTotal: number}) => {
+const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, email: string, username: string}, voteTotal: number}) => {
     const [selectedVote, setSelectedVote] = useState(voteTotal);
 
     const setVote = (post: Post, voteVal: number) => {
