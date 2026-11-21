@@ -1,5 +1,5 @@
 import { prisma } from './lib/prisma';
-import { Role, Condition } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
 
@@ -24,7 +24,7 @@ async function main() {
   for (const data of config.defaultPosts) {
     console.log(`  Adding stuff: ${JSON.stringify(data)}`);
      
-    await prisma.stuff.upsert({
+    await prisma.post.upsert({
       where: { id: config.defaultPosts.indexOf(data) + 1 },
       update: {},
       create: {
