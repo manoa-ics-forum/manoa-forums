@@ -1,12 +1,16 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "ADMIN" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "id": 1, "email": "admin@foo.com", "username": "admin_John", "password": "changeme", "role": "ADMIN", "posts": [
+      { "id":1, "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "category": "Campus", "author": "admin@foo.com"}
+    ]},
+    { "email": "john@foo.com", "username": "JohnDober", "password": "changeme", "posts": [
+      { "id":2, "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "category": "Other", "author": "john@foo.com"},
+      { "id":3, "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "category": "Classes", "author": "john@foo.com"}
+    ]}
   ],
-  "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  "defaultPosts": [
+    { "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "category": "Campus", "author": "admin@foo.com"},
+    { "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "category": "Other", "author": "john@foo.com"},
+    { "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "category": "Classes", "author": "john@foo.com"}
   ]
 }
