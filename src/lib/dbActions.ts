@@ -1,41 +1,64 @@
 'use server';
 
-import { Condition, Stuff, Prisma } from '@prisma/client';
+import { Post, Stuff, Prisma } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
+import { auth } from '@/lib/auth';
 
-/**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties:
- * name, quantity, owner, condition.
- */
-export async function addStuff(stuff: {
-  name: string;
-  quantity: number;
-  owner: string;
-  condition: string;
-}) {
-  let condition: Condition = 'good';
+export async function votePost(post: Post, val: number) {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) throw new Error('You must be signed in to vote.');
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) throw new Error('Signed-in user was not found.');
 
-  if (stuff.condition === 'poor') {
-    condition = 'poor';
-  } else if (stuff.condition === 'excellent') {
-    condition = 'excellent';
-  } else {
-    condition = 'fair';
-  }
-
-  await prisma.stuff.create({
-    data: {
-      name: stuff.name,
-      quantity: stuff.quantity,
-      owner: stuff.owner,
-      condition,
+  await prisma.vote.upsert({
+    where: {
+      userId_postId: {
+        userId: user.id,
+        postId: post.id,
+      },
+    },
+    update: {
+      value: val
+    },
+    create: {
+      value: val,
+      userId: user.id,
+      postId: post.id,
     },
   });
+}
 
-  redirect('/list');
+export async function removeVote(post: Post) {
+  const session = await auth();
+  const email = session?.user.email;
+  if (!email) throw new Error('You must be signed in to vote.');
+  const user = await prisma.user.findUnique({where: { email }});
+  if (!user) throw new Error('Signed-in user was not found.');
+  await prisma.vote.delete({
+    where: {
+      userId_postId: {
+        userId: user.id,
+        postId: post.id,
+      },
+    },
+  });
+}
+
+export async function getPostValue(post: Post) {
+  const votes = await prisma.vote.findMany({
+    where: {
+      postId: post.id
+    },
+    select : {
+      value: true,
+    }
+  })
+
+  return votes.reduce((total, current) => total + current.value, 0);
+
 }
 
 /**
