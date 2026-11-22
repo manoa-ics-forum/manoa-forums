@@ -14,7 +14,7 @@ const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, 
     const [selectedVote, setSelectedVote] = useState(voteTotal);
 
     const setVote = (post: Post, voteVal: number) => {
-        (voteVal !== 0) ? votePost(post,voteVal) : removeVote(post);
+        votePost(post,voteVal);
         voteTotal += voteVal;
         setSelectedVote(voteTotal);
     };

@@ -13,38 +13,49 @@ export async function votePost(post: Post, val: number) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error('Signed-in user was not found.');
 
-  await prisma.vote.upsert({
+  const vote = await prisma.vote.findFirst({
     where: {
-      userId_postId: {
-        userId: user.id,
-        postId: post.id,
-      },
-    },
-    update: {
-      value: val
-    },
-    create: {
-      value: val,
-      userId: user.id,
       postId: post.id,
+      userId: user.id,
     },
   });
-}
 
-export async function removeVote(post: Post) {
-  const session = await auth();
-  const email = session?.user.email;
-  if (!email) throw new Error('You must be signed in to vote.');
-  const user = await prisma.user.findUnique({where: { email }});
-  if (!user) throw new Error('Signed-in user was not found.');
-  await prisma.vote.delete({
-    where: {
-      userId_postId: {
-        userId: user.id,
+  if (!vote) {
+    await prisma.vote.create({
+      data: {
         postId: post.id,
+        userId: user.id,
+        value: val,
       },
-    },
-  });
+    });
+  }
+  else {
+
+    if (vote.value === val) {
+      await prisma.vote.delete({
+        where: {
+          userId_postId: {
+            userId: user.id,
+            postId: post.id,
+          },
+        },
+      });
+    }
+
+    else {
+      await prisma.vote.update({
+        where: {
+          userId_postId: {
+            userId: user.id,
+            postId: post.id,
+          },
+        },
+        data: {
+          value: val,
+        }
+      });
+    }
+  
 }
 
 export async function getPostValue(post: Post) {

@@ -31,6 +31,7 @@ async function main() {
         title: data.title,
         content: data.content,
         category: data.category,
+        totalVotes: data.totalVotes,
         author: {
           connect: { email: data.author },
         }
