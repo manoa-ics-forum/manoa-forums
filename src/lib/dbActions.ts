@@ -1,5 +1,4 @@
 'use server';
-
 import { Post, Stuff, Prisma } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
@@ -29,9 +28,10 @@ export async function votePost(post: Post, val: number) {
       },
     });
   }
+  
   else {
-
     if (vote.value === val) {
+      val = -val;
       await prisma.vote.delete({
         where: {
           userId_postId: {
@@ -54,8 +54,16 @@ export async function votePost(post: Post, val: number) {
           value: val,
         }
       });
+      val = 2*val
     }
-  
+  }
+  // update post value 
+    await prisma.post.update({
+      where: {id: post.id},
+      data: {
+        totalVotes: post.totalVotes + val,
+      },
+    });
 }
 
 /**
