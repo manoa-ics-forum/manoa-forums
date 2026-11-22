@@ -58,20 +58,6 @@ export async function votePost(post: Post, val: number) {
   
 }
 
-export async function getPostValue(post: Post) {
-  const votes = await prisma.vote.findMany({
-    where: {
-      postId: post.id
-    },
-    select : {
-      value: true,
-    }
-  })
-
-  return votes.reduce((total, current) => total + current.value, 0);
-
-}
-
 /**
  * Edits an existing stuff in the database.
  */
