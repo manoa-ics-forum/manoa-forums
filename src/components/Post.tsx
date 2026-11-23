@@ -1,27 +1,30 @@
 'use client';
 import styles from '@/app/forums/page.module.css';
 import Image from 'next/image';
-import { Post, User } from '@prisma/client';
+import { Post, Vote } from '@prisma/client';
 import placeHolderImage from '@/../public/uhLogo.png';
 import { useState } from 'react';
-import { votePost, removeVote } from '@/lib/dbActions';
+import { votePost } from '@/lib/dbActions';
 
-// TODO: Fix the buggy arrow fill.
-// TODO: Instead of double clicking their vote, users should simply click their vote and it will remove the vote.
-// TODO: give immediate feedback when user votes (Users should not have to reload to view the votes after voting on a post)
 
-const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, email: string, username: string}, voteTotal: number}) => {
-    const [selectedVote, setSelectedVote] = useState(voteTotal);
+const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: number, username: string}, userVotedPost: {votes: Vote[], email: string}}) => {
+    const [voteTotal, setPostValue] = useState(post.totalVotes);
+    const [userVote, setuserVote] = useState<-1 | 0 | 1>(
+        (userVotedPost?.votes.find(votedPost => votedPost.postId === post.id)?.value ?? 0) as -1 | 0 | 1
+    );
 
-    const setVote = (post: Post, voteVal: number) => {
-        votePost(post,voteVal);
-        voteTotal += voteVal;
-        setSelectedVote(voteTotal);
+    const setVote = (voteVal: -1 | 1) => {
+        const nextVote = userVote === voteVal ? 0 : voteVal;
+        const changeInVote = nextVote - userVote;
+
+        setuserVote(nextVote);
+        setPostValue(current => current + changeInVote);
+        votePost(post, voteVal);
     };
 
     return (
     <article
-        className={styles.post}    >
+        className={styles.post}>
         <Image
         className={styles.categoryIcon}
         src={placeHolderImage}
@@ -31,7 +34,7 @@ const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, 
         />
         <div className={styles.postContent}>
         <button
-            aria-label={`${post.title} by `}
+            aria-label={`${post.title}`}
             className={styles.postSummary}
             type="button"
         >
@@ -50,13 +53,12 @@ const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, 
             <button
             aria-label="Upvote"
             className={styles.voteButton}
-            onClick={() => setVote(post, 1)}
-            onDoubleClick={() => setVote(post, 0)}
+            onClick={() => setVote(1)}
             type="button"
             >
             <svg
                 aria-hidden="true"
-                className={`${styles.voteArrow} ${selectedVote === 1 ? styles.filled : ''}`}
+                className={`${styles.voteArrow} ${(userVote === 1) ? styles.filled : ''}`}
                 viewBox="0 0 24 24"
             >
                 <path d="M12 3 3.5 11h5v10h7V11h5L12 3Z" />
@@ -68,13 +70,12 @@ const PostComponent = ({post, user, voteTotal}: {post: Post, user: {id: number, 
             <button
             aria-label="Downvote"
             className={styles.voteButton}
-            onClick={() => setVote(post, -1)}
-            onDoubleClick={() => setVote(post, 0)}
+            onClick={() => setVote(-1)}
             type="button"
             >
             <svg
                 aria-hidden="true"
-                className={`${styles.voteArrow} ${styles.downArrow} ${selectedVote === -1 ? styles.filled : ''}`}
+                className={`${styles.voteArrow} ${styles.downArrow} ${(userVote === -1) ? styles.filled : ''}`}
                 viewBox="0 0 24 24"
             >
                 <path d="M12 3 3.5 11h5v10h7V11h5L12 3Z" />

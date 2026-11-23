@@ -31,7 +31,6 @@ export async function votePost(post: Post, val: number) {
   
   else {
     if (vote.value === val) {
-      val = -val;
       await prisma.vote.delete({
         where: {
           userId_postId: {
@@ -40,6 +39,7 @@ export async function votePost(post: Post, val: number) {
           },
         },
       });
+      val = -val;
     }
 
     else {
@@ -61,7 +61,7 @@ export async function votePost(post: Post, val: number) {
     await prisma.post.update({
       where: {id: post.id},
       data: {
-        totalVotes: post.totalVotes + val,
+        totalVotes: { increment: val },
       },
     });
 }
