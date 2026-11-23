@@ -1,16 +1,16 @@
 {
   "defaultAccounts": [
     { "id": 1, "email": "admin@foo.com", "username": "admin_John", "password": "changeme", "role": "ADMIN", "posts": [
-      { "id":1, "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "totalVotes": 26, "category": "Campus", "author": "admin@foo.com"}
+      { "id":1, "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "totalVotes": 26, "category": "campus", "author": "admin@foo.com"}
     ]},
     { "email": "john@foo.com", "username": "JohnDober", "password": "changeme", "posts": [
-      { "id":2, "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "totalVotes": 12, "category": "Other", "author": "john@foo.com"},
-      { "id":3, "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "totalVotes": 1, "category": "Classes", "author": "john@foo.com"}
+      { "id":2, "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "totalVotes": 12, "category": "other", "author": "john@foo.com"},
+      { "id":3, "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "totalVotes": 1, "category": "classes", "author": "john@foo.com"}
     ]}
   ],
   "defaultPosts": [
-    { "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "totalVotes": 26, "category": "Campus", "author": "admin@foo.com"},
-    { "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "totalVotes": 12, "category": "Other", "author": "john@foo.com"},
-    { "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "totalVotes": 1, "category": "Classes", "author": "john@foo.com"}
+    { "title": "ANY GOOD SPOTS IN CAMPUS TO STUDY?", "content": "Random stuff about subject.", "totalVotes": 26, "category": "campus", "author": "admin@foo.com"},
+    { "title": "HOW CAN I JOIN UH ESPORTS?", "content": "Random stuff about subject.", "totalVotes": 12, "category": "other", "author": "john@foo.com"},
+    { "title": "ANY GOOD RESOURCES FOR MATH?", "content": "Random stuff about subject.", "totalVotes": 1, "category": "classes", "author": "john@foo.com"}
   ]
 }

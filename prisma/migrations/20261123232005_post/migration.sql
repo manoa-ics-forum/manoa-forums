@@ -1,12 +1,22 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
 
-  - A unique constraint covering the columns `[username]` on the table `User` will be added. If there are existing duplicate values, this will fail.
-  - The required column `username` was added to the `User` table with a prisma-level default value. This is not possible if the table is not empty. Please add this column as optional, then populate it before making it required.
+-- CreateEnum
+CREATE TYPE "Category" AS ENUM ('campus', 'classes', 'events', 'financial', 'important', 'other', 'resources', 'sports');
 
-*/
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "username" TEXT NOT NULL;
+-- CreateEnum
+CREATE TYPE "Condition" AS ENUM ('excellent', 'good', 'fair', 'poor');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Vote" (
@@ -22,11 +32,26 @@ CREATE TABLE "Post" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
+    "category" "Category" NOT NULL,
     "authorId" INTEGER NOT NULL,
+    "totalVotes" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Stuff" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "condition" "Condition" NOT NULL DEFAULT 'good',
+    "owner" TEXT NOT NULL,
+
+    CONSTRAINT "Stuff_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
