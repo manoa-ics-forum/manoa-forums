@@ -1,6 +1,7 @@
 'use client';
 import styles from '@/app/forums/page.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Post, Vote } from '@prisma/client';
 import placeHolderImage from '@/../public/uhLogo.png';
 import { useState } from 'react';
@@ -33,10 +34,10 @@ const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: numb
         height={120}
         />
         <div className={styles.postContent}>
-        <button
-            aria-label={`${post.title}`}
+        <Link
+            aria-label={`Read post: ${post.title}`}
             className={styles.postSummary}
-            type="button"
+            href={`/forums/${post.id}`}
         >
             <span className={styles.postMeta}>
             <span className={styles.author}>
@@ -48,7 +49,7 @@ const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: numb
             </span>
             <span className={styles.title}>{post.title}</span>
             <span className={styles.excerpt}>{post.content}</span>
-        </button>
+        </Link>
         <div className={styles.votes}>
             <button
             aria-label="Upvote"
