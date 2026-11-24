@@ -25,6 +25,7 @@ model User {
   role        Role   @default(USER)
   posts       Post[] @relation()
   votes       Vote[]
+  comments    Comment[]
 }
 
 model Vote {
@@ -55,7 +56,18 @@ model Post {
   authorId    Int
   author      User @relation(fields: [authorId], references: [id])
   votes       Vote[]
+  comments    Comment[]
   totalVotes  Int @default(0)
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
 }
 
 enum Condition {

@@ -15,3 +15,29 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.user-account-nav > .dropdown-toggle {
+  display: inline-flex;
+  min-width: 180px;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 2rem;
+  border-radius: 9999px;
+  background-color: #fff;
+  box-shadow: none;
+  color: #01723e !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.user-account-nav > .dropdown-toggle::after {
+  display: none;
+}
+
+.user-account-nav > .dropdown-toggle:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 3px;
+}

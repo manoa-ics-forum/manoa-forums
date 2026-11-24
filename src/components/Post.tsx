@@ -3,10 +3,19 @@ import styles from '@/app/forums/page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Post, Vote } from '@prisma/client';
-import placeHolderImage from '@/../public/uhLogo.png';
 import { useState } from 'react';
 import { votePost } from '@/lib/dbActions';
 
+const categoryIcons: Record<Post['category'], string> = {
+    campus: '/campusTag.png',
+    classes: '/classTag.png',
+    events: '/eventTag.png',
+    financial: '/financialTag.png',
+    important: '/importantTag.png',
+    other: '/otherTag.png',
+    resources: '/resourcesTag.png',
+    sports: '/sportsTag.png',
+};
 
 const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: number, username: string}, userVotedPost: {votes: Vote[], email: string}}) => {
     const [voteTotal, setPostValue] = useState(post.totalVotes);
@@ -20,7 +29,12 @@ const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: numb
 
         setuserVote(nextVote);
         setPostValue(current => current + changeInVote);
-        votePost(post, voteVal);
+        void votePost(post.id, voteVal).catch(() => {
+            setPostValue(post.totalVotes);
+            setuserVote(
+                (userVotedPost?.votes.find(votedPost => votedPost.postId === post.id)?.value ?? 0) as -1 | 0 | 1
+            );
+        });
     };
 
     return (
@@ -28,7 +42,7 @@ const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: numb
         className={styles.post}>
         <Image
         className={styles.categoryIcon}
-        src={placeHolderImage}
+        src={categoryIcons[post.category]}
         alt=""
         width={120}
         height={120}

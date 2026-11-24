@@ -1,69 +1,130 @@
 'use server';
-import { Post, Stuff, Prisma } from '@prisma/client';
+import { Stuff, Prisma } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { prisma } from './prisma';
 import { auth } from '@/lib/auth';
 
-export async function votePost(post: Post, val: number) {
+export type CommentActionState = {
+  error?: string;
+  success?: string;
+};
+
+export async function createComment(
+  postId: number,
+  _previousState: CommentActionState,
+  formData: FormData,
+): Promise<CommentActionState> {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) {
+    return { error: 'You must be signed in to comment.' };
+  }
+
+  if (!Number.isInteger(postId) || postId < 1) {
+    return { error: 'This post could not be found.' };
+  }
+
+  const content = formData.get('content');
+  if (typeof content !== 'string') {
+    return { error: 'Enter a comment before submitting.' };
+  }
+
+  const trimmedContent = content.trim();
+  if (!trimmedContent) {
+    return { error: 'Enter a comment before submitting.' };
+  }
+  if (trimmedContent.length > 2000) {
+    return { error: 'Comments must be 2000 characters or fewer.' };
+  }
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) {
+    return { error: 'Your signed-in account could not be found.' };
+  }
+
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+    select: { id: true },
+  });
+  if (!post) {
+    return { error: 'This post could not be found.' };
+  }
+
+  await prisma.comment.create({
+    data: {
+      content: trimmedContent,
+      postId,
+      authorId: user.id,
+    },
+  });
+
+  revalidatePath(`/forums/${postId}`);
+  return { success: 'Your comment was added.' };
+}
+
+export async function votePost(postId: number, val: -1 | 1) {
   const session = await auth();
   const email = session?.user?.email;
   if (!email) throw new Error('You must be signed in to vote.');
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new Error('Signed-in user was not found.');
 
-  const vote = await prisma.vote.findFirst({
+  const post = await prisma.post.findUnique({
+    where: { id: postId },
+    select: { id: true },
+  });
+  if (!post) throw new Error('This post could not be found.');
+
+  const vote = await prisma.vote.findUnique({
     where: {
-      postId: post.id,
-      userId: user.id,
+      userId_postId: {
+        userId: user.id,
+        postId,
+      },
     },
   });
 
+  let change = 0;
+
   if (!vote) {
     await prisma.vote.create({
-      data: {
-        postId: post.id,
-        userId: user.id,
-        value: val,
+      data: { postId, userId: user.id, value: val },
+    });
+    change = val;
+  } else if (vote.value === val) {
+    await prisma.vote.delete({
+      where: {
+        userId_postId: {
+          userId: user.id,
+          postId,
+        },
       },
     });
-  }
-  
-  else {
-    if (vote.value === val) {
-      await prisma.vote.delete({
-        where: {
-          userId_postId: {
-            userId: user.id,
-            postId: post.id,
-          },
+    change = -val;
+  } else {
+    await prisma.vote.update({
+      where: {
+        userId_postId: {
+          userId: user.id,
+          postId,
         },
-      });
-      val = -val;
-    }
+      },
+      data: { value: val },
+    });
+    change = val - vote.value;
+  }
 
-    else {
-      await prisma.vote.update({
-        where: {
-          userId_postId: {
-            userId: user.id,
-            postId: post.id,
-          },
-        },
-        data: {
-          value: val,
-        }
-      });
-      val = 2*val
-    }
-  }
-  // update post value 
-    await prisma.post.update({
-      where: {id: post.id},
-      data: {
-        totalVotes: { increment: val },
-      },
-    });
+  await prisma.post.update({
+    where: { id: postId },
+    data: {
+      totalVotes: { increment: change },
+    },
+  });
+
+  revalidatePath('/forums');
+  revalidatePath(`/forums/${postId}`);
 }
 
 /**

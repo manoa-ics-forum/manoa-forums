@@ -12,6 +12,15 @@ const NavBar: React.FC = () => {
   if (status === 'loading') return null;
   const currentUser = session?.user?.email;
   const role = session?.user?.role;
+  const navButtonGroupStyle: React.CSSProperties = {
+    backgroundColor: '#01723E',
+    borderRadius: '9999px',
+    padding: '0.35rem 0.5rem',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.5rem',
+  };
   const navButtonStyle: React.CSSProperties = {
     backgroundColor: '#FFFFFF',
     color: '#01723E',
@@ -46,16 +55,6 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser && (
-              <>
-                <Nav.Link id="add-stuff-nav" href="/add" active={pathName === '/add'}>
-                  Add Stuff
-                </Nav.Link>
-                <Nav.Link id="list-stuff-nav" href="/list" active={pathName === '/list'}>
-                  List Stuff
-                </Nav.Link>
-              </>
-            )}
             {currentUser && role === 'ADMIN' && (
               <Nav.Link id="admin-stuff-nav" href="/admin" active={pathName === '/admin'}>
                 Admin
@@ -64,7 +63,7 @@ const NavBar: React.FC = () => {
           </Nav>
           <Nav>
             {session ? (
-              <>
+              <div style={navButtonGroupStyle}>
                 <Nav.Link
                   id="create-post-nav"
                   href="/create-post"
@@ -73,7 +72,18 @@ const NavBar: React.FC = () => {
                 >
                   Create Post
                 </Nav.Link>
-                <NavDropdown id="login-dropdown" title={currentUser}>
+                <Nav.Link
+                  href="/forums"
+                  active={pathName === '/forums'}
+                  style={navButtonStyle}
+                >
+                  View Forums
+                </Nav.Link>
+                <NavDropdown
+                  id="login-dropdown"
+                  className="user-account-nav"
+                  title={currentUser}
+                >
                   <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                     <BoxArrowRight />
                     Sign Out
@@ -83,27 +93,9 @@ const NavBar: React.FC = () => {
                     Change Password
                   </NavDropdown.Item>
                 </NavDropdown>
-              </>
+              </div>
             ) : (
-              <div
-                style={{
-                  backgroundColor: '#01723E',
-                  borderRadius: '9999px',
-                  padding: '0.35rem 0.5rem',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                }}
-              >
-                <Nav.Link
-                  id="create-post-nav"
-                  href="/create-post"
-                  active={pathName === '/create-post'}
-                  style={navButtonStyle}
-                >
-                  Create Post
-                </Nav.Link>
+              <div style={navButtonGroupStyle}>
                 <Nav.Link
                   href="/forums"
                   style={navButtonStyle}

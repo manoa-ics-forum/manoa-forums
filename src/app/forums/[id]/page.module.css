@@ -101,6 +101,74 @@
   font-weight: 900;
 }
 
+.voteControls {
+  display: inline-flex;
+  min-width: 146px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.2rem;
+  padding: 0 0.45rem;
+  border-radius: 9px;
+  background: #007b45;
+  color: #fff;
+  font-size: 1.65rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.voteButton {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.voteButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.voteButton:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 3px;
+}
+
+.voteControls .voteCount {
+  min-width: 2ch;
+  justify-content: center;
+  margin: 0;
+  background: transparent;
+}
+
+.voteArrow {
+  width: 25px;
+  height: 25px;
+  overflow: visible;
+  fill: none;
+}
+
+.voteArrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.voteArrow.filled path {
+  fill: currentColor;
+}
+
+.downArrow {
+  transform: rotate(180deg);
+}
+
 .content {
   margin: 1rem 0 0;
   color: #4a4a4a;
@@ -113,17 +181,14 @@
 
 .discussion {
   width: min(100%, 1200px);
-  min-height: 220px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: 1rem;
   margin: 0 auto;
   padding: 2rem;
   border-radius: 10px;
   background: #e6efeb;
-  text-align: center;
 }
 
 .discussion h2 {
@@ -135,10 +200,119 @@
   text-transform: uppercase;
 }
 
-.discussion p {
+.emptyDiscussion {
   margin: 0;
   color: #4a4a4a;
   font-weight: 650;
+}
+
+.commentList {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comment {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.commentMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.commentAuthor {
+  color: #00733f;
+  font-weight: 800;
+}
+
+.commentContent {
+  margin: 0.5rem 0 0;
+  color: #222;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.commentForm {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #c5d6ce;
+}
+
+.commentLabel {
+  color: #111;
+  font-weight: 800;
+}
+
+.commentInput {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.75rem;
+  border: 1px solid #8a9b92;
+  border-radius: 6px;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  resize: vertical;
+}
+
+.commentInput:focus-visible,
+.submitComment:focus-visible,
+.signInPrompt a:focus-visible {
+  outline: 3px solid #ffb81c;
+  outline-offset: 3px;
+}
+
+.submitComment {
+  justify-self: start;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: #00733f;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submitComment:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.formError,
+.formSuccess {
+  margin: 0;
+  font-weight: 700;
+}
+
+.formError {
+  color: #a71930;
+}
+
+.formSuccess {
+  color: #006b3f;
+}
+
+.signInPrompt {
+  margin: 0;
+  color: #4a4a4a;
+  font-weight: 650;
+}
+
+.signInPrompt a {
+  color: #00733f;
+  font-weight: 800;
 }
 
 @media (max-width: 600px) {
@@ -161,7 +335,6 @@
   }
 
   .discussion {
-    min-height: 170px;
     padding: 1.25rem;
   }
 }
