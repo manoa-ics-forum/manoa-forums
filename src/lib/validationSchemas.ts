@@ -11,6 +11,7 @@ export const CreatePostSchema = Yup.object({
   title: Yup.string().required(),
   content: Yup.string().required(),
   category: Yup.string().oneOf(['CAMPUS', 'CLASSES', 'EVENTS', 'FINANCIAL', 'IMPORTANT', 'OTHER', 'RESOURCES', 'SPORTS']).required(),
+  authorEmail: Yup.string().required(),
 });
 
 export const EditStuffSchema = Yup.object({

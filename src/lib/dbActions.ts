@@ -1,5 +1,5 @@
 'use server';
-import { Post, Stuff, Prisma } from '@prisma/client';
+import { Post, Stuff, Prisma, Category, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -64,6 +64,30 @@ export async function votePost(post: Post, val: number) {
         totalVotes: { increment: val },
       },
     });
+}
+
+export async function createPost(data: {title: string, content: string, category: string, authorEmail: string}) {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: data.authorEmail,
+    }
+  });
+  if (user !== null) {
+    const post = await prisma.post.create({
+      data: {
+        authorId: user.id,
+        title: data.title,
+        content: data.content,
+        category: data.category as Category,
+        totalVotes: 0,
+      }
+    });
+  }
+  else {
+    Error(`Could not find user email ${data.authorEmail}`);
+  }
+  
+  redirect('/forums');
 }
 
 /**

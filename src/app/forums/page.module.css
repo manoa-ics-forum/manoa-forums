@@ -109,6 +109,26 @@
   background: #cb1f3b;
 }
 
+.important {
+  background: #a3138d;
+}
+
+.sports {
+  background: #188920; 
+}
+
+.resources {
+  background: #6adffc;
+}
+
+.financial {
+  background: #63f9c7;
+}
+
+.events {
+  background: black;
+}
+
 .title {
   overflow: hidden;
   max-width: 100%;

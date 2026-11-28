@@ -42,7 +42,7 @@ const PostComponent = ({post, user, userVotedPost}: {post: Post, user: {id: numb
             <span className={styles.author}>
                 {user.username}
             </span>
-            <span className={`${styles.category} ${styles[post.category.toLowerCase()]}`}>
+            <span className={`${styles.category} ${styles[post.category]}`}>
                 {post.category}
             </span>
             </span>
